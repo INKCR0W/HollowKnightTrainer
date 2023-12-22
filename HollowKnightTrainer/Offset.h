@@ -5,48 +5,41 @@
 #include <string>
 #include <Windows.h>
 
+#include "Uncopyable.h"
+
 namespace offset {
 	using std::vector;
-	using std::string;
+	using std::wstring;
 	using std::map;
 
-	class Uncopyable {
+	class ValueOffset : private Uncopyable::Uncopyable {
 	protected:
-		Uncopyable() {}
-		virtual ~Uncopyable() {}
-	private:
-		Uncopyable(const Uncopyable&);
-		Uncopyable& operator=(const Uncopyable&);
-	};
-
-	class ValueOffset : private Uncopyable {
-	protected:
-		string p_module;
+		wstring p_module;
 		vector<DWORD> p_offsets;
 
 	public:
-		ValueOffset() : p_module(), p_offsets() {}
-		ValueOffset(const string& p_module, const vector<DWORD>& p_offsets) : p_module(p_module), p_offsets(p_offsets) {}
+		ValueOffset();
+		ValueOffset(const wstring& p_module, const vector<DWORD>& p_offsets);
 		~ValueOffset() {}
 
-		bool set_module(const string& module_name);
+		bool set_module(const wstring& module_name);
 		bool set_offset(const vector<DWORD>& offset_array);
 
-		const string& module() const;
+		const wstring& module() const;
 		const vector<DWORD>& offset() const;
 	};
 
 	class ObjectOffset : public ValueOffset {
 	private:
-		map<string, vector<DWORD>> p_values;
+		map<wstring, vector<DWORD>> p_values;
 
 	public:
-		ObjectOffset() : ValueOffset(), p_values() {}
-		ObjectOffset(const string& p_module, const vector<DWORD>& p_offsets, const map<string, vector<DWORD>>& p_values) : ValueOffset(p_module, p_offsets), p_values(p_values) {}
+		ObjectOffset();
+		ObjectOffset(const wstring& p_module, const vector<DWORD>& p_offsets, const map<wstring, vector<DWORD>>& p_values);
 		~ObjectOffset() {}
 
-		bool set_values(const map<string, vector<DWORD>>& values_offsets);
+		bool set_values(const map<wstring, vector<DWORD>>& values_offsets);
 
-		const map<string, vector<DWORD>>& values() const;
+		const map<wstring, vector<DWORD>>& values() const;
 	};
 }

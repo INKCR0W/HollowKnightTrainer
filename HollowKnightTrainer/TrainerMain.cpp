@@ -2,18 +2,27 @@
 #include <string>
 
 #include "Offset.h"
+#include "Memory.h"
 
 using std::string;
-using std::cout;
+using std::wcout;
 using std::endl;
 
-int main() {
+int main() {		// DEBUGGING
 	offset::ValueOffset offset;
 
-	offset.set_module("123");
+	offset.set_module(L"123");
 
-	cout << offset.module() << endl;
+	wcout << offset.module() << endl;
 
+	memory::Memory memory(std::wstring(L"Game.exe"));
 
+	auto myMap = memory.list();
+
+	for (auto it = myMap.begin(); it != myMap.end(); ++it) {
+		wcout << it->first << ": " << std::hex << std::uppercase << it->second << endl;
+	}
+
+	system("pause");
 	return 0;
 }

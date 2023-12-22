@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Offset.h" />
+    <ClInclude Include="Uncopyable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Memory.cpp" />

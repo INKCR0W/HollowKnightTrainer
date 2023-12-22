@@ -1,35 +1,40 @@
 #include "Offset.h"
 
-using namespace std;
-using offset::ValueOffset;
-using offset::ObjectOffset;
-//using std::string;
-//using std::vector;
-//using std::map;
+namespace offset {
+	using namespace std;
 
-bool ValueOffset::set_module(const string& module_name) {
-	p_module = module_name;
-	return p_module == "" ? false : true;
-}
+	ValueOffset::ValueOffset() : p_module(), p_offsets() {}
+	ValueOffset::ValueOffset(const wstring& p_module, const vector<DWORD>& p_offsets) : p_module(p_module), p_offsets(p_offsets) {}
 
-bool ValueOffset::set_offset(const vector<DWORD>& offset_array) {
-	p_offsets = offset_array;
-	return p_offsets.size() == 0 ? false : true;
-}
+	bool ValueOffset::set_module(const wstring& module_name) {
+		p_module = module_name;
+		return p_module == L"" ? false : true;
+	}
 
-const string& ValueOffset::module() const {
-	return p_module;
-}
+	bool ValueOffset::set_offset(const vector<DWORD>& offset_array) {
+		p_offsets = offset_array;
+		return p_offsets.size() == 0 ? false : true;
+	}
 
-const vector<DWORD>& ValueOffset::offset() const {
-	return p_offsets;
-}
+	const wstring& ValueOffset::module() const {
+		return p_module;
+	}
 
-bool ObjectOffset::set_values(const map<string, vector<DWORD>>& values_offsets) {
-	p_values = values_offsets;
-	return p_values.size() == 0 ? false : true;
-}
+	const vector<DWORD>& ValueOffset::offset() const {
+		return p_offsets;
+	}
 
-const map<string, vector<DWORD>>& ObjectOffset::values() const {
-	return p_values;
+
+
+	ObjectOffset::ObjectOffset() : ValueOffset(), p_values() {}
+	ObjectOffset::ObjectOffset(const wstring& p_module, const vector<DWORD>& p_offsets, const map<wstring, vector<DWORD>>& p_values) : ValueOffset(p_module, p_offsets), p_values(p_values) {}
+
+	bool ObjectOffset::set_values(const map<wstring, vector<DWORD>>& values_offsets) {
+		p_values = values_offsets;
+		return p_values.size() == 0 ? false : true;
+	}
+
+	const map<wstring, vector<DWORD>>& ObjectOffset::values() const {
+		return p_values;
+	}
 }
