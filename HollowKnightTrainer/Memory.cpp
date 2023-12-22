@@ -4,10 +4,12 @@
 
 #include "Memory.h"
 #include "Error.h"
+#include "DEBUGGING.h"
 
 namespace memory {
 	using namespace std;
 	using error::get_error;
+	using std::map;
 
 	Memory::Memory() : process_name(), process_id(0), process_handle(nullptr), module_list() {}
 	Memory::Memory(const wstring& process_name) : process_name(process_name) {
@@ -23,12 +25,12 @@ namespace memory {
 		}
 	}
 
-	const map<wstring, DWORD>& Memory::list() const
+	const map<wstring, ADDRPOINT>& Memory::list() const
 	{
 		return module_list;
 	}
 
-	const DWORD Memory::addr(const wstring& module_name) const
+	const ADDRPOINT Memory::addr(const wstring& module_name) const
 	{
 		return module_list.find(module_name)->second;
 	}
@@ -66,7 +68,7 @@ namespace memory {
 
 			if (Module32First(snapshot, &module_entry)) {
 				do {
-					module_list[wstring(module_entry.szModule)] = reinterpret_cast<DWORD>(module_entry.modBaseAddr);
+					module_list[wstring(module_entry.szModule)] = reinterpret_cast<ADDRPOINT>(module_entry.modBaseAddr);
 				} while (Module32Next(snapshot, &module_entry));
 			}
 
@@ -75,7 +77,6 @@ namespace memory {
 		else {
 			return false;
 		}
-
 		return true;
 	}
 

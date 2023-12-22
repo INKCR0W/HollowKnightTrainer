@@ -13,13 +13,16 @@ namespace memory {
 	using std::wstring;
 	using std::map;
 
+	typedef void* ADDRPOINT;
+	typedef unsigned long long ULL;
+
 	class Memory : private Uncopyable::Uncopyable {
 	private:
 		wstring process_name;
 		DWORD process_id;
 		HANDLE process_handle;
 
-		map<wstring, DWORD> module_list;
+		map<wstring, ADDRPOINT> module_list;
 
 		HANDLE get_process_handle(const std::wstring& processName);
 		bool update_module_list();
@@ -29,7 +32,23 @@ namespace memory {
 		Memory(const wstring& process_name);
 		~Memory() {};
 
-		const map<wstring, DWORD>& list() const;
-		const DWORD addr(const wstring& module_name) const;
+		const map<wstring, ADDRPOINT>& list() const;
+		const ADDRPOINT addr(const wstring& module_name) const;
+
+		template<typename T>
+		bool read_addr(ADDRPOINT offset, T* value);
+		template<typename T>
+		bool write_addr(ADDRPOINT offset, T value);
 	};
+
+	template<typename T>
+	inline bool Memory::read_addr(ADDRPOINT offset, T* value)
+	{
+		return ReadProcessMemory(process_handle, offset, value, sizeof(T), NULL);
+	}
+	template<typename T>
+	inline bool Memory::write_addr(ADDRPOINT offset, T value)
+	{
+		return WriteProcessMemory(process_handle, offset, &value, sizeof(T), NULL);
+	}
 }
