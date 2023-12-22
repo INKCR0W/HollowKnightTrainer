@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HollowKnightTrainer", "HollowKnightTrainer\HollowKnightTrainer.vcxproj", "{009F57BD-0D95-44EE-9E75-C178FF25EC40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Debug|x64.ActiveCfg = Debug|x64
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Debug|x64.Build.0 = Debug|x64
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Debug|x86.ActiveCfg = Debug|Win32
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Debug|x86.Build.0 = Debug|Win32
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Release|x64.ActiveCfg = Release|x64
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Release|x64.Build.0 = Release|x64
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Release|x86.ActiveCfg = Release|Win32
+		{009F57BD-0D95-44EE-9E75-C178FF25EC40}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA11A759-C436-46CA-8232-594370D56299}
+	EndGlobalSection
+EndGlobal
