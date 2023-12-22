@@ -3,20 +3,22 @@
 #include <tlhelp32.h>
 
 #include "Memory.h"
+#include "Error.h"
 
 namespace memory {
 	using namespace std;
+	using error::get_error;
 
 	Memory::Memory() : process_name(), process_id(0), process_handle(nullptr), module_list() {}
 	Memory::Memory(const wstring& process_name) : process_name(process_name) {
 		process_handle = get_process_handle(process_name);
 		if (process_handle == nullptr) {
-			cerr << "CAN NOT FOUND GAME PROCESS, ERRORID: " << GetLastError() << endl;
+			cerr << "CAN NOT FOUND GAME PROCESS, ERROR: " << get_error(GetLastError()) << endl;
 			exit(0);
 		}
 
 		if (!update_module_list()) {
-			cerr << "CAN NOT UPDATE MODULE LIST, ERRORID: " << GetLastError() << endl;
+			cerr << "CAN NOT UPDATE MODULE LIST, ERROR: " << get_error(GetLastError()) << endl;
 			exit(0);
 		}
 	}

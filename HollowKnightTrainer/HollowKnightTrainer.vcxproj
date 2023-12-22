@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Error.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Offset.h" />
     <ClInclude Include="Uncopyable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Offset.cpp" />
     <ClCompile Include="TrainerMain.cpp" />

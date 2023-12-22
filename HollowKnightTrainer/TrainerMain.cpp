@@ -15,7 +15,7 @@ int main() {		// DEBUGGING
 
 	wcout << offset.module() << endl;
 
-	memory::Memory memory(std::wstring(L"Game.exe"));
+	memory::Memory memory(std::wstring(L"r5apex.exe"));
 
 	auto myMap = memory.list();
 
