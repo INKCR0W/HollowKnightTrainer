@@ -36,7 +36,7 @@ namespace memory {
 		Memory(const wstring& process_name, const DWORD& process_id, const HANDLE& process_handle, const map<wstring, ADDRPOINT>& module_list);
 		~Memory() {};
 
-		const map<wstring, ADDRPOINT>& list() const;
+		const map<wstring, ADDRPOINT>& module_map() const;
 		const ADDRPOINT addr(const wstring& module_name) const;
 
 		const ADDRPOINT find_value_addr(const ValueOffset& value_offsets) const;

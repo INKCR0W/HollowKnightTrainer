@@ -29,7 +29,7 @@ namespace memory {
 		}
 	}
 
-	const map<wstring, ADDRPOINT>& Memory::list() const
+	const map<wstring, ADDRPOINT>& Memory::module_map() const
 	{
 		return module_list;
 	}

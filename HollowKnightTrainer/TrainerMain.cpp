@@ -72,7 +72,6 @@ int main() {		// DEBUGGING
 	memory::Memory memory(L"hollow_knight.exe");
 
 
-
 	system("pause");
 	return 0;
 }
