@@ -41,6 +41,7 @@ namespace offset {
 		~ObjectOffset() {}
 
 		bool set_values(const map<wstring, vector<ADDRPOINT>>& values_offsets);
+		bool add_value(const wstring& module_name, const vector<ADDRPOINT>& offsets);
 
 		const map<wstring, vector<ADDRPOINT>>& values() const;
 	};

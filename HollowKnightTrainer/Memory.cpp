@@ -12,6 +12,10 @@ namespace memory {
 	using std::map;
 
 	Memory::Memory() : process_name(), process_id(0), process_handle(nullptr), module_list() {}
+
+	Memory::Memory(const wstring& process_name, const DWORD& process_id, const HANDLE& process_handle, const map<wstring, ADDRPOINT>& module_list)
+		: process_name(process_name), process_id(process_id), process_handle(process_handle), module_list(module_list) {}
+
 	Memory::Memory(const wstring& process_name) : process_name(process_name) {
 		process_handle = get_process_handle(process_name);
 		if (process_handle == nullptr) {
@@ -68,7 +72,7 @@ namespace memory {
 
 			if (Module32First(snapshot, &module_entry)) {
 				do {
-					module_list[wstring(module_entry.szModule)] = reinterpret_cast<ADDRPOINT>(module_entry.modBaseAddr);
+					module_list.emplace(std::make_pair(wstring(module_entry.szModule), reinterpret_cast<ADDRPOINT>(module_entry.modBaseAddr)));
 				} while (Module32Next(snapshot, &module_entry));
 			}
 

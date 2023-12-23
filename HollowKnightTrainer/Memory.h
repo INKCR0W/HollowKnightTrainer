@@ -30,6 +30,7 @@ namespace memory {
 	public:
 		Memory();
 		Memory(const wstring& process_name);
+		Memory(const wstring& process_name, const DWORD& process_id, const HANDLE& process_handle, const map<wstring, ADDRPOINT>& module_list);
 		~Memory() {};
 
 		const map<wstring, ADDRPOINT>& list() const;
@@ -37,9 +38,15 @@ namespace memory {
 
 		template<typename T>
 		bool read_addr(ADDRPOINT offset, T* value);
+
 		template<typename T>
 		bool write_addr(ADDRPOINT offset, T value);
+
+
 	};
+
+
+
 
 	template<typename T>
 	inline bool Memory::read_addr(ADDRPOINT offset, T* value)

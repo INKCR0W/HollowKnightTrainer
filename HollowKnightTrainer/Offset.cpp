@@ -1,3 +1,4 @@
+#include "DEBUGGING.h"
 #include "Offset.h"
 
 namespace offset {
@@ -32,6 +33,18 @@ namespace offset {
 	bool ObjectOffset::set_values(const map<wstring, vector<ADDRPOINT>>& values_offsets) {
 		p_values = values_offsets;
 		return p_values.size() == 0 ? false : true;
+	}
+
+	bool ObjectOffset::add_value(const wstring& module_name, const vector<ADDRPOINT>& offsets)
+	{
+#ifdef DEBUG  // DEBUG阶段行为，发布时跳过以提高运行效率
+		// 键已存在则直接返回false
+		if (p_values.find(module_name) != p_values.end())
+			return false;
+#endif // DEBUG
+
+		p_values.emplace(std::make_pair(module_name, offsets));
+		return true;
 	}
 
 	const map<wstring, vector<ADDRPOINT>>& ObjectOffset::values() const {

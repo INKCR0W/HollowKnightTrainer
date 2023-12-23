@@ -1,3 +1,24 @@
+/*
+*  ┏┓　　　┏┓
+*┏┛┻━━━┛┻┓
+*┃              ┃ 　
+*┃　　　━　　　┃
+*┃　┳┛　┗┳　┃
+*┃              ┃
+*┃　　　┻　　　┃
+*┃              ┃
+*┗━┓　　　┏━┛
+*　　┃　　　┃神兽保佑		THE MYTHICAL BEAST BLESS
+*　　┃　　　┃代码无BUG！	THE CODE WITHOUT BUGS!
+*　　┃　　　┗━━━┓
+*　　┃              ┣┓
+*　　┃              ┏┛
+*　　┗┓┓┏━┳┓┏┛
+*　　　┃┫┫　┃┫┫
+*　　　┗┻┛　┗┻┛ 　
+*/
+
+
 #include <iostream>
 #include <string>
 
