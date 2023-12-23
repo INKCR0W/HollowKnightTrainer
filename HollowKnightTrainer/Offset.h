@@ -13,6 +13,7 @@ namespace offset {
 	using std::map;
 
 	typedef void* ADDRPOINT;
+	typedef unsigned long long ULL;
 
 	class ValueOffset : private Uncopyable::Uncopyable {
 	protected:
@@ -22,6 +23,7 @@ namespace offset {
 	public:
 		ValueOffset();
 		ValueOffset(const wstring& p_module, const vector<ADDRPOINT>& p_offsets);
+		ValueOffset(const wstring& p_module, const vector<ULL>& offsets);
 		~ValueOffset() {}
 
 		bool set_module(const wstring& module_name);
@@ -33,16 +35,17 @@ namespace offset {
 
 	class ObjectOffset : public ValueOffset {
 	private:
-		map<wstring, vector<ADDRPOINT>> p_values;
+		map<wstring, ADDRPOINT> p_values;
 
 	public:
 		ObjectOffset();
-		ObjectOffset(const wstring& p_module, const vector<ADDRPOINT>& p_offsets, const map<wstring, vector<ADDRPOINT>>& p_values);
+		ObjectOffset(const wstring& p_module, const vector<ADDRPOINT>& p_offsets, const map<wstring, ADDRPOINT>& p_values);
+		ObjectOffset(const wstring& p_module, const vector<ULL>& p_offsets, const map<wstring, ULL>& p_values);
 		~ObjectOffset() {}
 
-		bool set_values(const map<wstring, vector<ADDRPOINT>>& values_offsets);
-		bool add_value(const wstring& module_name, const vector<ADDRPOINT>& offsets);
+		bool set_values(const map<wstring, ADDRPOINT>& values_offsets);
+		//bool add_value(const wstring& module_name, const vector<ADDRPOINT>& offsets);
 
-		const map<wstring, vector<ADDRPOINT>>& values() const;
+		const map<wstring, ADDRPOINT>& values() const;
 	};
 }

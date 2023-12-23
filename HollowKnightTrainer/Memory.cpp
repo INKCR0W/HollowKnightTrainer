@@ -39,6 +39,75 @@ namespace memory {
 		return module_list.find(module_name)->second;
 	}
 
+	const ADDRPOINT Memory::find_value_addr(const ValueOffset& value_offsets) const
+	{
+#ifdef DEBUG  // DEBUG阶段行为，发布时跳过以提高运行效率
+		if (value_offsets.module() == L"") {
+			return nullptr;
+		}
+
+		if (value_offsets.offset().empty()) {
+			return nullptr;
+		}
+
+		if (module_list.find(value_offsets.module()) == module_list.end()) {
+			return nullptr;
+		}
+#endif // DEBUG
+
+		ULL module_addr = reinterpret_cast<ULL>(module_list.find(value_offsets.module())->second);
+		const vector<ADDRPOINT>& offsets = value_offsets.offset();
+
+		for (auto iter = offsets.begin(); iter != offsets.end(); ++iter) {
+			if (iter == offsets.end() - 1) {
+				return	reinterpret_cast<ADDRPOINT>(module_addr + reinterpret_cast<ULL>(*iter));
+			}
+
+			ReadProcessMemory(process_handle, reinterpret_cast<ADDRPOINT>(module_addr + reinterpret_cast<ULL>(*iter)), &module_addr, sizeof(module_addr), NULL);
+		}
+
+		return nullptr;
+	}
+
+	const ADDRPOINT Memory::find_object_addr(const ObjectOffset& object_offsets, const wstring& value_name) const
+	{
+#ifdef DEBUG  // DEBUG阶段行为，发布时跳过以提高运行效率
+		if (object_offsets.module() == L"") {
+			return nullptr;
+		}
+
+		if (object_offsets.offset().empty()) {
+			return nullptr;
+		}
+
+		if (module_list.find(object_offsets.module()) == module_list.end()) {
+			return nullptr;
+		}
+
+		if (object_offsets.values().empty()) {
+			return nullptr;
+		}
+
+		if (object_offsets.values().find(value_name) == object_offsets.values().end()) {
+			return nullptr;
+		}
+#endif // DEBUG
+
+		ULL module_addr = reinterpret_cast<ULL>(module_list.find(object_offsets.module())->second);
+		ULL value_offset = reinterpret_cast<ULL>(object_offsets.values().find(value_name)->second);
+		const vector<ADDRPOINT>& offsets = object_offsets.offset();
+
+		for (auto iter = offsets.begin(); iter != offsets.end(); ++iter) {
+			if (iter == offsets.end() - 1) {
+				return	reinterpret_cast<ADDRPOINT>(module_addr + reinterpret_cast<ULL>(*iter) + value_offset);
+			}
+
+			ReadProcessMemory(process_handle, reinterpret_cast<ADDRPOINT>(module_addr + reinterpret_cast<ULL>(*iter)), &module_addr, sizeof(module_addr), NULL);
+		}
+
+		return nullptr;
+	}
+
 	HANDLE Memory::get_process_handle(const std::wstring& processName) {
 		DWORD processId = 0;
 		HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);

@@ -21,39 +21,34 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Offset.h"
 #include "Memory.h"
 
-using std::string;
-using std::wcout;
-using std::cout;
-using std::endl;
+using namespace std;
+using offset::ObjectOffset;
 
 int main() {		// DEBUGGING
-	offset::ValueOffset offset;
+	ObjectOffset offset(L"mono-2.0-bdwgc.dll", { 0x497DE8, 0x90, 0xE20, 0x11C }, {
+		{ L"health", 0x74 },
+		{ L"maxHealth", 0x78 },
+		{ L"maxHealthBase", 0x7C },
+		{ L"healthBlue", 0x80 },
+		{ L"heartPieces", 0x8C },
+		{ L"geo", 0xA8 },
+		{ L"maxMP", 0xAC },
+		{ L"MPCharge", 0xB0 },
+		{ L"vesselFragments", 0xC0 },
+		});
 
-	offset.set_module(L"123");
+	memory::Memory memory(L"hollow_knight.exe");
 
-	wcout << offset.module() << endl;
-
-	memory::Memory memory(L"Temp.exe");
-
-	auto myMap = memory.list();
-
-	for (auto it = myMap.begin(); it != myMap.end(); ++it) {
-		wcout << it->first << ": ";
-		cout << std::hex << std::uppercase << it->second << endl;
+	while (1) {
+		memory.write_object(offset, L"health", 5);
+		Sleep(500);
 	}
 
-	int a = 0;
-	cout << memory.read_addr(reinterpret_cast<void*>(0x113FC58), &a) << endl;
-	cout << a << endl;
-
-	cout << memory.write_addr(reinterpret_cast<void*>(0x113FC58), 90) << endl;
-
-	cout << memory.read_addr(reinterpret_cast<void*>(0x113FC58), &a) << endl;
-	cout << a << endl;
 
 	system("pause");
 	return 0;
