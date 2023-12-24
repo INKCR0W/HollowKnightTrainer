@@ -22,12 +22,14 @@
     <ClInclude Include="DEBUGGING.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Offset.h" />
     <ClInclude Include="Uncopyable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Offset.cpp" />
     <ClCompile Include="TrainerMain.cpp" />
   </ItemGroup>

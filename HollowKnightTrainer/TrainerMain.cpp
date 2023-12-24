@@ -22,15 +22,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
 
 #include "Offset.h"
 #include "Memory.h"
+#include "Menu.h"
 
 using namespace std;
 using offset::ObjectOffset;
 
 static const byte _TRUE = 1;
 static const byte _FALSE = 0;
+
 
 int main() {		// DEBUGGING
 	ObjectOffset PlayerData(L"mono-2.0-bdwgc.dll", { 0x497DE8, 0x90, 0xE20, 0x11C }, {
@@ -69,8 +72,22 @@ int main() {		// DEBUGGING
 		{ L"invulnerable", 0x2A },			// 无敌:Boolean
 		});
 
-	memory::Memory memory(L"hollow_knight.exe");
+	//memory::Memory memory(L"hollow_knight.exe");
 
+	int menu_point = 0;
+
+	menu::Menu menu({
+		"无敌 | invulnerable",
+		"无限生命值 | infinite hp",
+		"无限魂 | infinite soul",
+		"无限金钱 | infinite geo"
+		});
+
+	menu.init();
+
+	while (1) {
+		menu.listen();
+	}
 
 	system("pause");
 	return 0;
