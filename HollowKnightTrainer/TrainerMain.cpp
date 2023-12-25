@@ -72,7 +72,7 @@ int main() {		// DEBUGGING
 		{ L"invulnerable", 0x2A },			// 无敌:Boolean
 		});
 
-	//memory::Memory memory(L"hollow_knight.exe");
+	memory::Memory memory(L"hollow_knight.exe");
 
 	int menu_point = 0;
 
@@ -83,10 +83,40 @@ int main() {		// DEBUGGING
 		"无限金钱 | infinite geo"
 		});
 
-	menu.init();
+	if (!menu.init()) {
+		cerr << "初始化失败" << endl;
+		exit(0);
+	}
+
 
 	while (1) {
 		menu.listen();
+
+		if (menu.feature(0)) {
+			byte state = 0;
+			if (memory.read_object(HeroControllerStates, L"invulnerable", &state)) {
+				memory.write_object(HeroControllerStates, L"invulnerable", state | _TRUE);
+			}
+		}
+
+		if (menu.feature(1)) {
+			int max = 0;
+			if (memory.read_object(PlayerData, L"maxHealth", &max)) {
+				memory.write_object(PlayerData, L"health", max);
+			}
+
+		}
+
+		if (menu.feature(2)) {
+			int max = 0;
+			if (memory.read_object(PlayerData, L"maxMP", &max)) {
+				memory.write_object(PlayerData, L"MPCharge", max);
+			}
+		}
+
+		if (menu.feature(3)) {
+			memory.write_object(PlayerData, L"geo", 99999);
+		}
 	}
 
 	system("pause");

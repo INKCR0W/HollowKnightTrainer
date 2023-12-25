@@ -50,5 +50,8 @@ namespace menu {
 		//bool init(vector<Feature> list);
 
 		void listen();
+
+		const bool feature(int code) const;
+		void set_feature(int code, bool state);
 	};
 };

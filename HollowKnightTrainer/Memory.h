@@ -79,24 +79,40 @@ namespace memory {
 	template<typename T>
 	inline bool Memory::read_value(const ValueOffset& value_offsets, T* value)
 	{
-		return	ReadProcessMemory(process_handle, find_value_addr(value_offsets), value, sizeof(T), NULL);
+		const ADDRPOINT addr = find_value_addr(value_offsets);
+		if (addr == nullptr) {
+			return false;
+		}
+		return	ReadProcessMemory(process_handle, addr, value, sizeof(T), NULL);
 	}
 
 	template<typename T>
 	inline bool Memory::write_value(const ValueOffset& value_offsets, const T value)
 	{
-		return	WriteProcessMemory(process_handle, find_value_addr(value_offsets), &value, sizeof(T), NULL);
+		const ADDRPOINT addr = find_value_addr(value_offsets);
+		if (addr == nullptr) {
+			return false;
+		}
+		return	WriteProcessMemory(process_handle, addr, &value, sizeof(T), NULL);
 	}
 
 	template<typename T>
 	inline bool Memory::read_object(const ObjectOffset& object_offsets, const wstring& value_name, T* value)
 	{
-		return	ReadProcessMemory(process_handle, find_object_addr(object_offsets, value_name), value, sizeof(T), NULL);
+		const ADDRPOINT addr = find_object_addr(object_offsets, value_name);
+		if (addr == nullptr) {
+			return false;
+		}
+		return	ReadProcessMemory(process_handle, addr, value, sizeof(T), NULL);
 	}
 
 	template<typename T>
 	inline bool Memory::write_object(const ObjectOffset& object_offsets, const wstring& value_name, T value)
 	{
-		return	WriteProcessMemory(process_handle, find_object_addr(object_offsets, value_name), &value, sizeof(T), NULL);
+		const ADDRPOINT addr = find_object_addr(object_offsets, value_name);
+		if (addr == nullptr) {
+			return false;
+		}
+		return	WriteProcessMemory(process_handle, addr, &value, sizeof(T), NULL);
 	}
 }

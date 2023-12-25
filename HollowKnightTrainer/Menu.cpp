@@ -116,4 +116,14 @@ namespace menu {
 			should_refresh = false;
 		}
 	}
+
+	const bool Menu::feature(int code) const
+	{
+		return menu_list[code].is_on;
+	}
+
+	void Menu::set_feature(int code, bool state)
+	{
+		menu_list[code].is_on = state;
+	}
 }
