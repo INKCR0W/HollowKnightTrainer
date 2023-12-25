@@ -27,9 +27,6 @@
     <ClInclude Include="Error.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DEBUGGING.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>头文件</Filter>
     </ClInclude>

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DEBUGGING.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Menu.h" />

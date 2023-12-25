@@ -18,6 +18,7 @@
 *　　　┗┻┛　┗┻┛ 　
 */
 
+#define DEBUG
 
 #include <iostream>
 #include <string>
@@ -80,7 +81,7 @@ int main() {		// DEBUGGING
 		"无敌 | invulnerable",
 		"无限生命值 | infinite hp",
 		"无限魂 | infinite soul",
-		"无限金钱 | infinite geo"
+		"无限金钱 | infinite geo",
 		});
 
 	if (!menu.init()) {
