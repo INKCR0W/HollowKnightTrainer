@@ -60,6 +60,7 @@ namespace menu {
 			menu_point = 0;
 		}
 
+
 		for (Feature& line : menu_list) {
 			++line_count;
 

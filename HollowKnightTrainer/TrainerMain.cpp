@@ -18,7 +18,7 @@
 *¡¡¡¡¡¡©»©ß©¿¡¡©»©ß©¿ ¡¡
 */
 
-#define DEBUG
+// #define DEBUG
 
 #include <iostream>
 #include <string>
@@ -89,15 +89,18 @@ int main() {		// DEBUGGING
 		exit(0);
 	}
 
+	bool invulnerabled = false;
 
 	while (1) {
 		menu.listen();
 
 		if (menu.feature(0)) {
-			byte state = 0;
-			if (memory.read_object(HeroControllerStates, L"invulnerable", &state)) {
-				memory.write_object(HeroControllerStates, L"invulnerable", state | _TRUE);
-			}
+			memory.write_object(HeroControllerStates, L"invulnerable", _TRUE);
+			invulnerabled = true;
+		}
+		else if (invulnerabled) {
+			invulnerabled = false;
+			memory.write_object(HeroControllerStates, L"invulnerable", _FALSE);
 		}
 
 		if (menu.feature(1)) {
@@ -118,6 +121,8 @@ int main() {		// DEBUGGING
 		if (menu.feature(3)) {
 			memory.write_object(PlayerData, L"geo", 99999);
 		}
+
+		Sleep(50);
 	}
 
 	system("pause");
