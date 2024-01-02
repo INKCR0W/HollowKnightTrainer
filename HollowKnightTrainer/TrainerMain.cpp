@@ -38,8 +38,6 @@ static const byte _FALSE = 0;
 
 int main() {		// DEBUGGING
 
-	const memory::ADDRPOINT real_invulnerable = reinterpret_cast<memory::ADDRPOINT>(0x7FF687FD0000);		// 真正的无敌，无法被敌人攻击的同时还无法受到地形伤害（完全免疫地刺等） real invulnerable
-
 	ObjectOffset PlayerData(L"mono-2.0-bdwgc.dll", { 0x497DE8, 0x90, 0xE20, 0x11C }, {
 		{ L"health", 0x74 },				// 生命值:Int32
 		{ L"maxHealth", 0x78 },				// 生命值上限:Int32
@@ -49,6 +47,8 @@ int main() {		// DEBUGGING
 		{ L"geo", 0xA8 },					// 吉欧:Int32		（钱）
 		{ L"maxMP", 0xAC },					// 魂最大值:Int32
 		{ L"MPCharge", 0xB0 },				// 魂:Int32			（为什么魂就是最大值在前面）
+		{ L"2RDMPCharge", 0xB4 },			// 备用魂:Int32
+		{ L"2RDmaxMP", 0xB8 },				// 备用魂最大值:Int32
 		{ L"vesselFragments", 0xC0 },		// 容器碎片数量:Int32
 		{ L"canDash", 0x13C },				// 冲刺:Boolean
 		{ L"canBackDash", 0x13D },			// 向下冲刺:Boolean
@@ -73,7 +73,7 @@ int main() {		// DEBUGGING
 		});
 
 	ObjectOffset HeroControllerStates(L"UnityPlayer.dll", { 0x1A181C0, 0x20, 0x88, 0x28, 0x50, 0x8 }, {
-		{ L"invulnerable", 0x2A },			// 无敌:Boolean		（这个只作用于敌人的攻击，无法免疫地形杀，如果需要真·无敌，可以使用real_invulnerable）
+		{ L"invulnerable", 0x2A },			// 无敌:Boolean
 		});
 
 	memory::Memory memory(L"hollow_knight.exe");
@@ -98,12 +98,12 @@ int main() {		// DEBUGGING
 		menu.listen();
 
 		if (menu.feature(0)) {
-			memory.write_addr(real_invulnerable, _TRUE);
+			memory.write_object(HeroControllerStates, L"invulnerable", _TRUE);
 			invulnerabled = true;
 		}
 		else if (invulnerabled) {
 			invulnerabled = false;
-			memory.write_addr(real_invulnerable, _FALSE);
+			memory.write_object(HeroControllerStates, L"invulnerable", _FALSE);
 		}
 
 		if (menu.feature(1)) {
@@ -118,6 +118,11 @@ int main() {		// DEBUGGING
 			int max = 0;
 			if (memory.read_object(PlayerData, L"maxMP", &max)) {
 				memory.write_object(PlayerData, L"MPCharge", max);
+			}
+
+			int sMax = 0;
+			if (memory.read_object(PlayerData, L"2RDmaxMP", &max)) {
+				memory.write_object(PlayerData, L"2RDMPCharge", max);
 			}
 		}
 
