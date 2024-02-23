@@ -15,6 +15,7 @@ namespace memory {
 	Memory::Memory(const wstring& process_name, const DWORD& process_id, const HANDLE& process_handle, const map<wstring, ADDRPOINT>& module_list)
 		: process_name(process_name), process_id(process_id), process_handle(process_handle), module_list(module_list) {}
 
+
 	Memory::Memory(const wstring& process_name) : process_name(process_name) {
 		process_handle = get_process_handle(process_name);
 		if (process_handle == nullptr) {
@@ -26,6 +27,12 @@ namespace memory {
 			cerr << "CAN NOT UPDATE MODULE LIST, ERROR: " << get_error(GetLastError()) << endl;
 			exit(0);
 		}
+	}
+
+	Memory::~Memory()
+	{
+		if (this->process_handle)
+			CloseHandle(this->process_handle);
 	}
 
 	const map<wstring, ADDRPOINT>& Memory::module_map() const
